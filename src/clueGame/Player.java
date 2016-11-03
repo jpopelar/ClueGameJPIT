@@ -11,7 +11,6 @@ public class Player {
 	private int row, col;
 	private Color color;
 	private Set<Card> hand;
-	private Set<Card> detNotes;
 	
 	public Player(String name, int row, int col, Color color) {
 		super();
@@ -21,7 +20,6 @@ public class Player {
 		this.color = color;
 		
 		hand = new HashSet<Card>();
-		detNotes = new HashSet<Card>();
 	}
 	
 	public Card disproveSuggestion(Solution suggestion) {

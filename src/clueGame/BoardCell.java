@@ -22,20 +22,13 @@ public class BoardCell {
 
 	// determine if cell is a walkway
 	public boolean isWalkway(){
-		if(Character.toLowerCase(initial) == 'w') { //Refactored
-			return true;
-		} else {
-			return false;
-		}
+		if (Character.toLowerCase(initial) == 'w') return true;
+		return false;
 	}
 	
 	// Determine if the cell is a room
 	public boolean isRoom(){
-		if(Character.toLowerCase(initial) != 'w') { //Refactored
-			return true;
-		} else {
-			return false;
-		}
+		return !isWalkway();
 	}
 	
 	// Determine if the cell is a Doorway

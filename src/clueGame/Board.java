@@ -338,6 +338,8 @@ public class Board {
 			case DOWN:
 				adjSet.add(board[i + 1][j]);
 				break;
+			default:
+				break;
 			}
 		// Determine if there is a door next to the current cell and add it to the adjacent list
 		}else{
@@ -358,6 +360,8 @@ public class Board {
 					case LEFT:
 					case RIGHT:
 					case DOWN:
+						break;
+					default:
 						break;
 					}
 				}
@@ -380,6 +384,8 @@ public class Board {
 					case RIGHT:
 					case UP:
 						break;
+					default:
+						break;
 					}
 				}
 			}
@@ -401,6 +407,8 @@ public class Board {
 					case RIGHT:
 					case DOWN:
 						break;
+					default:
+						break;
 					}
 				}
 			}
@@ -421,6 +429,8 @@ public class Board {
 					case LEFT:
 					case UP:
 					case DOWN:
+						break;
+					default:
 						break;
 					}
 				}

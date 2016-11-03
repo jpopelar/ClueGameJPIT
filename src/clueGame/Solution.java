@@ -21,6 +21,4 @@ public class Solution {
 		return "Solution [person=" + person + ", weapon=" + weapon + ", room=" + room + "]";
 	}
 	
-	//Unnecessary comment for testing purposes
-	
 }

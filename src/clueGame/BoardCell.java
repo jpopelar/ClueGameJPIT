@@ -33,11 +33,7 @@ public class BoardCell {
 	
 	// Determine if the cell is a Doorway
 	public boolean isDoorway(){
-		if (opensWhichWay != DoorDirection.NONE) {
-			return true;
-		} else {
-			return false;
-		}
+		return opensWhichWay != DoorDirection.NONE;
 	}
 	
 	// Return the row index for the cell

@@ -112,6 +112,7 @@ public class Board {
 			// it is a bad format and must through an exception
 			if (!(roomInfo[2].equals("Card") || roomInfo[2].equals("Other"))) {
 				// Throw a BadConfigFormatException for legend
+				in.close();
 				throw new BadConfigFormatException("Not a Card or Other, Check Legend");
 			}
 			// else put the character and room info in the room map
@@ -126,6 +127,7 @@ public class Board {
 				rooms.put(character, room);
 			}
 		}
+		in.close();
 	}
 	
 	// load the board configuration from the given configuration file
@@ -152,6 +154,7 @@ public class Board {
 				// if the character is not in the room legend, throw an exception
 				if(!rooms.containsKey(roomInit)){
 					// throw a BadConfigFormatException saying there is an invalid character in the boad configuration
+					in.close();
 					throw new BadConfigFormatException("Invalid board space Initial");
 				// if there are two characters in this character segment
 				} else if (roomString.length() == 2) {
@@ -186,6 +189,7 @@ public class Board {
 			// in the last row, and it isn't the first row, throw an exception
 			if((numColumns != lastColumn) && (numRows != 0)){
 				// Throw a BadConfigFormatException as the number of columns differs per row
+				in.close();
 				throw new BadConfigFormatException("Different number of columns per row");
 			}
 			// assign the current column count to the variable to store the last column count
@@ -194,6 +198,7 @@ public class Board {
 			// increment the row count
 			numRows = numRows + 1;
 		}
+		in.close();
 	}
 	
 	public void loadPeopleConfig(){
@@ -231,6 +236,7 @@ public class Board {
 
 
 			}
+			in.close();
 		} catch (FileNotFoundException e) {}
 		for (int i = 0; i < players.size(); i++) {
 			deck.add(new Card(players.get(i).getName(), CardType.PERSON));
@@ -247,6 +253,7 @@ public class Board {
 				String weapon = in.nextLine();
 				deck.add(new Card(weapon, CardType.WEAPON));
 			}
+			in.close();
 		} catch (FileNotFoundException e) {}
 	}
 	

@@ -25,13 +25,16 @@ public class Player {
 	}
 	
 	public Card disproveSuggestion(Solution suggestion) {
-		ArrayList<Card> matchCards = new ArrayList<Card>();
+		ArrayList<Card> matchCards = new ArrayList<Card>(); //Set up a list of cards that match the suggestion
 		
-		for (Card c : hand) if (c.getName().equals(suggestion.person) || c.getName().equals(suggestion.weapon) || c.getName().equals(suggestion.room)) matchCards.add(c);
+		for (Card c : hand) if (c.getName().equals(suggestion.person) || //If the player's holding one
+							    c.getName().equals(suggestion.weapon) || 
+							    c.getName().equals(suggestion.room)) 
+			matchCards.add(c); //Add it to the list
 		
-		if (matchCards.size() == 0) return null;
+		if (matchCards.size() == 0) return null; //Return null if no response
 		
-		Random rand = new Random();
+		Random rand = new Random(); //Otherwise, randomly grab a card out of the list and return
 		return matchCards.get(rand.nextInt(matchCards.size()));
 	}
 	

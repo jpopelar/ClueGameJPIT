@@ -14,7 +14,7 @@ public class ComputerPlayer extends Player {
 	private Solution suggestion;
 	public ComputerPlayer(String name, int row, int col, Color color) {
 		super(name, row, col, color);
-		board = board.getInstance();
+		board = Board.getInstance();
 		detNotes= new HashSet<Card>(); //Stores unseen cards
 	}
 

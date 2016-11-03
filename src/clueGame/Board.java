@@ -317,11 +317,11 @@ public class Board {
 	public Set<BoardCell> getAdjList(int i, int j){
 		// Initialize the adjacent set as a HashSet
 		Set<BoardCell> adjSet = new HashSet<BoardCell>();
-		// 
+		// Ensures player doesn't move around in room
 		if(getCellAt(i, j).isRoom() && !getCellAt(i, j).isDoorway()){
 			
 		// if the cell at the location is a doorway
-		}else if(getCellAt(i,j).isDoorway()){
+		}else if(getCellAt(i, j).isRoom() && getCellAt(i,j).isDoorway()){
 			// determine the door direction and save it
 			DoorDirection whichWay = getCellAt(i,j).getDoorDirection();
 			// add an adjacent cell to the adjSet set depending on the door direction

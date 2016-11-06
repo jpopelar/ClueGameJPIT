@@ -1,6 +1,7 @@
 package clueGame;
 
 import java.awt.Color;
+import java.awt.Graphics;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.PrintWriter;
@@ -12,7 +13,9 @@ import java.util.Random;
 import java.util.Scanner;
 import java.util.Set;
 
-public class Board {
+import javax.swing.JPanel;
+
+public class Board extends JPanel {
 	// variable to store the initialized board
 	private static Board theInstance = new Board();
 	// variable to store the number of rows on the board
@@ -176,6 +179,8 @@ public class Board {
 						break;
 					case 'N':
 						board[numRows][numColumns] = new BoardCell(numRows,numColumns,roomInit,DoorDirection.NONE);
+						board[numRows][numColumns].setNameLocation(true);
+						board[numRows][numColumns].setRoomName(rooms);
 						break;
 					}
 				// else make the door direction for the current cell (using the column count and row count) none
@@ -549,4 +554,13 @@ public class Board {
 		return turnCounter % numPlayers();
 	}
 	
+	public void paintComponent(Graphics g) {
+		super.paintComponent(g);
+		for(int i = 0; i < numRows; i++) {
+			for(int j = 0; j < numColumns; j++) {
+				board[i][j].draw(g);
+				System.out.println("Drew " + i + " " + j);
+			}
+		}
+	}
 }

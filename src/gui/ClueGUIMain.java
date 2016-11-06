@@ -1,6 +1,7 @@
 package gui;
 
 import java.awt.BorderLayout;
+import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -27,8 +28,12 @@ public class ClueGUIMain extends JFrame {
 
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setTitle("Popelar-Tobiason Clue"); 
-		setSize(500, 200); //WRONG. Needs to be bigger
+		setSize(1000, 400); //WRONG. Needs to be bigger
 		detNotes = new DetNotesDialog();
+		
+		BoardGUI board = new BoardGUI();
+		board.setSize(new Dimension(500,500));
+		add(board, BorderLayout.CENTER);
 		
 		ControlGUI cont = new ControlGUI();
 		add(cont, BorderLayout.SOUTH);

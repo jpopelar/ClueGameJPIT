@@ -3,6 +3,9 @@ package gui;
 import java.awt.BorderLayout;
 
 import javax.swing.JFrame;
+import javax.swing.JMenu;
+import javax.swing.JMenuBar;
+import javax.swing.JMenuItem;
 
 public class ClueGUIMain extends JFrame {
 	
@@ -15,10 +18,23 @@ public class ClueGUIMain extends JFrame {
 		ControlGUI cont = new ControlGUI();
 		frame.add(cont, BorderLayout.SOUTH);
 		
+		JMenuBar menuBar = new JMenuBar();
+		frame.setJMenuBar(menuBar);
+		
+		
 		BoardGUI board = new BoardGUI();
 		frame.add(board, BorderLayout.CENTER);
 		frame.setVisible(true);
 	}
-
+	private JMenu createFileMenu() {
+		JMenu menu = new JMenu("File");
+		menu.add(createDectiveNotes());
+		menu.add(createFileExitItem());
+		return menu;
+	}
+	private JMenuItem createFileExitItem() {
+		JMenuItem item = new JMenuItem("Exit");
+		return item;
+	}
 
 }

@@ -83,16 +83,4 @@ public class ControlGUI extends JPanel {
 		mainPanel.add(result);
 		return mainPanel;
 	}
-	
-	public static void main(String[] args) {
-		JFrame frame = new JFrame();
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frame.setTitle("Clue Control"); //Subject to change
-		frame.setSize(500, 200);
-		
-		ControlGUI gui = new ControlGUI();
-		frame.add(gui, BorderLayout.CENTER);
-		frame.setVisible(true);
-	}
-
 }

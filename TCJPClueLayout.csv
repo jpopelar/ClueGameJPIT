@@ -1,34 +1,25 @@
-G,G,G,w,w,R,R,R,R,R,w,w,Y,Y,Y,Y,Y,Y,w,w,L,L,L,L,0
-G,G,G,w,w,R,R,R,R,R,w,w,Y,Y,Y,Y,Y,Y,w,w,L,L,L,L,1
-GN,G,G,w,w,RL,RN,R,R,R,w,w,YL,YN,Y,Y,Y,Y,w,w,L,L,L,L,2
-G,G,GR,w,w,R,R,R,R,R,w,w,YL,Y,Y,Y,Y,Y,w,w,L,L,L,L,3
-G,G,G,w,w,R,R,R,R,R,w,w,Y,Y,Y,Y,Y,Y,w,w,LN,L,L,L,4
-G,G,G,w,w,R,R,RD,R,R,w,w,Y,Y,Y,Y,Y,Y,w,w,L,L,L,L,5
-w,w,w,w,w,w,w,w,w,w,w,w,w,w,w,Y,Y,Y,w,w,L,L,L,L,6
-w,w,w,w,w,w,w,w,w,w,w,w,w,w,w,w,w,w,w,LU,L,L,L,L,7
-w,K,K,K,K,w,C,C,C,C,C,C,C,C,C,C,C,w,w,L,L,L,L,L,8
-w,K,K,K,K,w,C,C,C,C,C,C,C,C,C,C,C,w,w,L,L,L,L,L,9
-KU,K,K,K,K,w,C,C,C,C,C,C,C,C,C,C,C,w,w,L,L,L,L,L,10
-K,K,K,K,K,w,C,C,C,C,C,C,C,C,C,C,C,w,w,L,LD,L,L,L,11
-KN,K,K,K,K,w,C,C,C,C,C,C,C,C,C,C,C,w,w,w,w,w,w,w,12
-K,K,K,K,K,w,C,C,C,C,C,C,C,C,C,C,C,w,w,w,w,w,w,w,13
-K,K,K,K,K,w,C,C,C,C,C,C,C,C,C,C,C,w,w,O,O,O,O,OU,14
-K,K,K,K,K,w,C,C,C,C,C,C,C,C,C,C,C,w,w,O,O,O,O,O,15
-K,K,K,K,K,w,C,C,C,C,C,C,C,C,C,C,C,w,w,O,O,O,O,O,16
-K,K,KD,K,K,w,C,C,C,C,C,C,C,C,C,C,C,w,w,O,ON,O,O,O,17
-w,w,w,w,w,w,C,C,C,w,w,w,w,w,w,w,w,w,w,O,O,O,O,O,18
-S,S,S,S,S,w,w,w,w,w,w,w,B,B,B,B,B,w,w,OL,O,O,O,O,19
-S,S,S,S,S,w,PU,PU,PU,w,w,BL,B,B,B,B,B,w,w,O,O,O,O,O,20
-SN,S,S,S,w,w,P,P,P,w,w,B,BN,B,B,B,B,w,w,O,O,O,O,O,21
-S,S,S,S,w,P,PN,P,P,P,w,B,B,B,B,B,B,w,w,O,O,O,O,O,22
-S,S,S,S,w,P,P,P,P,P,w,B,B,B,B,B,B,w,w,O,O,O,O,O,23
-S,S,S,SR,w,P,P,P,P,P,w,B,B,B,B,B,B,w,w,O,O,O,O,O,24
-0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,
-,,,,,,,,,,,,,,,,,,,,,,,,
-,Door direction tests (TCJP_FileInitTests),,,,,,,,,,,,,,,,,,,,,,,
-,Walkway adjacency test,,,,,,,,,,,,,,,,,,,,,,,
-,Internal room space test,,,,,,,,,,,,,,,,,,,,,,,
-,"Adjacency lists, room entrances",,,,,,,,,,,,,,,,,,,,,,,
-,"Adjacency lists, walkways to room entrances",,,,,,,,,,,,,,,,,,,,,,,
-,,,,,,,,,,,,,,,,,,,,,,,,
-Number of doors: 16,,,,,,,,,,,,,,,,,,,,,,,,
+G,G,G,w,w,R,R,R,R,R,w,w,Y,Y,Y,Y,Y,Y,w,w,L,L,L,L
+G,G,G,w,w,R,R,R,R,R,w,w,Y,Y,Y,Y,Y,Y,w,w,L,L,L,L
+GN,G,G,w,w,RL,RN,R,R,R,w,w,YL,YN,Y,Y,Y,Y,w,w,L,L,L,L
+G,G,GR,w,w,R,R,R,R,R,w,w,YL,Y,Y,Y,Y,Y,w,w,L,L,L,L
+G,G,G,w,w,R,R,R,R,R,w,w,Y,Y,Y,Y,Y,Y,w,w,LN,L,L,L
+G,G,G,w,w,R,R,RD,R,R,w,w,Y,Y,Y,Y,Y,Y,w,w,L,L,L,L
+w,w,w,w,w,w,w,w,w,w,w,w,w,w,w,Y,Y,Y,w,w,L,L,L,L
+w,w,w,w,w,w,w,w,w,w,w,w,w,w,w,w,w,w,w,LU,L,L,L,L
+w,K,K,K,K,w,C,C,C,C,C,C,C,C,C,C,C,w,w,L,L,L,L,L
+w,K,K,K,K,w,C,C,C,C,C,C,C,C,C,C,C,w,w,L,L,L,L,L
+KU,K,K,K,K,w,C,C,C,C,C,C,C,C,C,C,C,w,w,L,L,L,L,L
+K,K,K,K,K,w,C,C,C,C,C,C,C,C,C,C,C,w,w,L,LD,L,L,L
+KN,K,K,K,K,w,C,C,C,C,C,C,C,C,C,C,C,w,w,w,w,w,w,w
+K,K,K,K,K,w,C,C,C,C,C,C,C,C,C,C,C,w,w,w,w,w,w,w
+K,K,K,K,K,w,C,C,C,C,C,C,C,C,C,C,C,w,w,O,O,O,O,OU
+K,K,K,K,K,w,C,C,C,C,C,C,C,C,C,C,C,w,w,O,O,O,O,O
+K,K,K,K,K,w,C,C,C,C,C,C,C,C,C,C,C,w,w,O,O,O,O,O
+K,K,KD,K,K,w,C,C,C,C,C,C,C,C,C,C,C,w,w,O,ON,O,O,O
+w,w,w,w,w,w,C,C,C,w,w,w,w,w,w,w,w,w,w,O,O,O,O,O
+S,S,S,S,S,w,w,w,w,w,w,w,B,B,B,B,B,w,w,OL,O,O,O,O
+S,S,S,S,S,w,PU,PU,PU,w,w,BL,B,B,B,B,B,w,w,O,O,O,O,O
+SN,S,S,S,w,w,P,P,P,w,w,B,BN,B,B,B,B,w,w,O,O,O,O,O
+S,S,S,S,w,P,PN,P,P,P,w,B,B,B,B,B,B,w,w,O,O,O,O,O
+S,S,S,S,w,P,P,P,P,P,w,B,B,B,B,B,B,w,w,O,O,O,O,O
+S,S,S,SR,w,P,P,P,P,P,w,B,B,B,B,B,B,w,w,O,O,O,O,O

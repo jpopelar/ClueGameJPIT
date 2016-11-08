@@ -24,6 +24,7 @@ public class Board extends JPanel {
 	private int numColumns;
 	// constant to store the max size of the game board
 	public final static int MAX_BOARD_SIZE = 50;
+	public static final int SQUARE_SIZE = 22;
 	// array to store all the board cells for the game board
 	private BoardCell[][] board;
 	// Map array to store the information for the different rooms
@@ -559,8 +560,10 @@ public class Board extends JPanel {
 		for(int i = 0; i < numRows; i++) {
 			for(int j = 0; j < numColumns; j++) {
 				board[i][j].draw(g);
-				System.out.println("Drew " + i + " " + j);
 			}
+		}
+		for(int i = 0; i < players.size(); i++) {
+			players.get(i).draw(g);
 		}
 	}
 }

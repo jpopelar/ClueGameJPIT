@@ -1,24 +1,29 @@
 package clueGame;
 
 import java.awt.Color;
+import java.awt.Graphics;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Random;
 import java.util.Set;
 
-public class Player {
+import javax.swing.JPanel;
+
+import sun.java2d.pipe.DrawImagePipe;
+
+public class Player extends JPanel{
 	private String playerName;
 	private int row, col;
 	private Color color;
 	private Set<Card> hand;
-	
+	private int boardSize;
 	public Player(String name, int row, int col, Color color) {
 		super();
 		this.playerName = name;
 		this.row = row;
 		this.col = col;
 		this.color = color;
-		
+		this.boardSize = Board.SQUARE_SIZE;
 		hand = new HashSet<Card>();
 	}
 	
@@ -34,6 +39,13 @@ public class Player {
 		
 		Random rand = new Random(); //Otherwise, randomly grab a card out of the list and return
 		return matchCards.get(rand.nextInt(matchCards.size()));
+	}
+	
+	public void draw(Graphics g) {
+		g.setColor(color);
+		g.fillOval((col)*boardSize, (row)*boardSize , boardSize, boardSize);
+		g.setColor(Color.black);
+		g.drawOval((col)*boardSize, (row)*boardSize , boardSize, boardSize);
 	}
 	
 	//SETTERS AND GETTERS ARE FOR TESTING PURPOSES ONLY!!!!
@@ -73,5 +85,5 @@ public class Player {
 
 	public void giveCard(Card targetCard) {
 		hand.add(targetCard);
-	}
+	} 
 }

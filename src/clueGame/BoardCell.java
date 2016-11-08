@@ -17,7 +17,7 @@ public class BoardCell extends JPanel {
 	private DoorDirection opensWhichWay;
 	private String roomName = null;
 	private boolean isNameLocation = false;
-	private static final int SQUARE_SIZE = 20;
+	private int boardSize;
 
 
 
@@ -28,6 +28,7 @@ public class BoardCell extends JPanel {
 		this.column = column;
 		this.initial = initial;
 		this.opensWhichWay = opensWhichWay;
+		this.boardSize = Board.SQUARE_SIZE;
 	}
 
 	// determine if cell is a walkway
@@ -92,28 +93,30 @@ public class BoardCell extends JPanel {
 	
 	public void draw(Graphics g) {
 		if (isWalkway()) {
-			System.out.println("Good 1");
-			g.setColor(Color.yellow);
-			g.fillRect(column*SQUARE_SIZE,row*SQUARE_SIZE,SQUARE_SIZE,SQUARE_SIZE);
+			//System.out.println("Good 1");
+			g.setColor(Color.white);
+			g.fillRect(column*boardSize,row*boardSize,boardSize,boardSize);
+			g.setColor(Color.black);
+			g.drawRect(column*boardSize,row*boardSize,boardSize,boardSize);
 		}
 		else {
-			System.out.println("Good 2");
+			//System.out.println("Good 2");
 			g.setColor(Color.gray);
-			g.fillRect(column*SQUARE_SIZE,row*SQUARE_SIZE,SQUARE_SIZE,SQUARE_SIZE);
+			g.fillRect(column*boardSize,row*boardSize,boardSize,boardSize);
 			if(isDoorway()) {
-				g.setColor(Color.blue);
+				g.setColor(Color.black);
 				switch (opensWhichWay) {
 				case UP:
-					g.fillRect(column*SQUARE_SIZE,row*SQUARE_SIZE,SQUARE_SIZE,SQUARE_SIZE/4);
+					g.fillRect(column*boardSize,row*boardSize,boardSize,boardSize/4);
 					break;
 				case DOWN:
-					g.fillRect((column)*SQUARE_SIZE,(row + 1)*SQUARE_SIZE - (SQUARE_SIZE/4),SQUARE_SIZE,SQUARE_SIZE/4);
+					g.fillRect((column)*boardSize,(row + 1)*boardSize - (boardSize/4),boardSize,boardSize/4);
 					break;
 				case LEFT:
-					g.fillRect(column*SQUARE_SIZE,(row)*SQUARE_SIZE,SQUARE_SIZE/4,SQUARE_SIZE);
+					g.fillRect(column*boardSize,(row)*boardSize,boardSize/4,boardSize);
 					break;
 				case RIGHT:
-					g.fillRect((column + 1)*SQUARE_SIZE - (SQUARE_SIZE/4),row*SQUARE_SIZE,SQUARE_SIZE/4,SQUARE_SIZE);
+					g.fillRect((column + 1)*boardSize - (boardSize/4),row*boardSize,boardSize/4,boardSize);
 					break;
 				default:
 					break;
@@ -121,10 +124,10 @@ public class BoardCell extends JPanel {
 			}
 			if(isNameLocation){
 				
-				System.out.println("-----------------------------------------------------------------");
+				//System.out.println("-----------------------------------------------------------------");
 				
-				g.setColor(Color.blue);
-				g.drawString(roomName, column*SQUARE_SIZE, row*SQUARE_SIZE);
+				g.setColor(Color.white);
+				g.drawString(roomName, column*boardSize, row*boardSize);
 			}
 		}
 	}

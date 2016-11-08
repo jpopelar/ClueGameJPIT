@@ -32,7 +32,6 @@ public class ClueGUIMain extends JFrame {
 		detNotes = new DetNotesDialog();
 		
 		BoardGUI board = new BoardGUI();
-		board.setSize(new Dimension(500,500));
 		add(board, BorderLayout.CENTER);
 		
 		ControlGUI cont = new ControlGUI();

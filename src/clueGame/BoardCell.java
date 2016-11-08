@@ -17,6 +17,7 @@ public class BoardCell extends JPanel {
 	private DoorDirection opensWhichWay;
 	private String roomName = null;
 	private boolean isNameLocation = false;
+	private static final int SQUARE_SIZE = 20;
 
 
 
@@ -93,26 +94,26 @@ public class BoardCell extends JPanel {
 		if (isWalkway()) {
 			System.out.println("Good 1");
 			g.setColor(Color.yellow);
-			g.fillRect(row*20,column*20,20,20);
+			g.fillRect(row*SQUARE_SIZE,column*SQUARE_SIZE,SQUARE_SIZE,SQUARE_SIZE);
 		}
 		else {
 			System.out.println("Good 2");
 			g.setColor(Color.gray);
-			g.fillRect(row*20,column*20,20,20);
+			g.fillRect(row*SQUARE_SIZE,column*SQUARE_SIZE,SQUARE_SIZE,SQUARE_SIZE);
 			if(isDoorway()) {
 				g.setColor(Color.blue);
 				switch (opensWhichWay) {
 				case UP:
-					g.fillRect(row*20,column*20,20,5);
+					g.fillRect(row*SQUARE_SIZE,column*SQUARE_SIZE,SQUARE_SIZE,SQUARE_SIZE/4);
 					break;
 				case DOWN:
-					g.fillRect(row*20,(column+1)*20,20,5);
+					g.fillRect(row*SQUARE_SIZE,(column+1)*SQUARE_SIZE,SQUARE_SIZE,SQUARE_SIZE/4);
 					break;
 				case LEFT:
-					g.fillRect(row*20,(column)*20,5,20);
+					g.fillRect(row*SQUARE_SIZE,(column)*SQUARE_SIZE,SQUARE_SIZE/4,SQUARE_SIZE);
 					break;
 				case RIGHT:
-					g.fillRect((row + 1)*20,(column)*20,5,20);
+					g.fillRect((row + 1)*SQUARE_SIZE,(column)*SQUARE_SIZE,SQUARE_SIZE/4,SQUARE_SIZE);
 					break;
 				default:
 					break;

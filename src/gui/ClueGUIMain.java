@@ -31,7 +31,6 @@ public class ClueGUIMain extends JFrame {
 		setSize(1000, 400); //WRONG. Needs to be bigger
 		detNotes = new DetNotesDialog();
 		
-		BoardGUI board = new BoardGUI();
 		add(board, BorderLayout.CENTER);
 		
 		ControlGUI cont = new ControlGUI();

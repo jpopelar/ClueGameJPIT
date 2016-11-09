@@ -25,6 +25,7 @@ public class ClueGUIMain extends JFrame {
 
 		board.setWeaponFile("TCJPWeapons.txt");
 		board.loadWeaponConfig();
+		board.dealCards();
 
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setTitle("Popelar-Tobiason Clue"); 

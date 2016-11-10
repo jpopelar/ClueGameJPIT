@@ -54,6 +54,8 @@ public class Board extends JPanel {
 	
 	private int turnCounter;
 	
+	private boolean liveBoard = true; //Boolean to determine if game is still in progress
+	
 	// constructor to initialize all the arrays, sets, and map variables
 	// It is private so that it is initialize instantly and never changed
 	private Board() {
@@ -502,6 +504,10 @@ public class Board extends JPanel {
 		boardConfigFile = string;
 		// initialize the name of the configuration file for the room legend
 		roomConfigFile = string2;
+	}
+	
+	public boolean isLive() {
+		return liveBoard;
 	}
 
 	// return the map array with room legend information stored in it

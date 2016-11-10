@@ -11,8 +11,11 @@ import javax.swing.JTextField;
 import javax.swing.border.EtchedBorder;
 import javax.swing.border.TitledBorder;
 
+import clueGame.Board;
+
 public class ControlGUI extends JPanel {
 	private static final long serialVersionUID = 1L;
+	private Board board = Board.getInstance();
 
 	public ControlGUI() {
 		//2 row layout
@@ -56,6 +59,7 @@ public class ControlGUI extends JPanel {
 		roll.setLayout(new GridLayout(2,0));
 		JTextField rollField = new JTextField(3);
 		rollField.setEditable(false);
+		rollField.setText(Integer.toString(board.getDiceRoll()));
 		JLabel textLabel1 = new JLabel("Roll");
 		roll.add(textLabel1, BorderLayout.WEST);
 		roll.add(rollField, BorderLayout.CENTER);

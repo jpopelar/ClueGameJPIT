@@ -14,7 +14,7 @@ import clueGame.Card;
 
 public class HandGUI extends JPanel {
 	private Set<Card> people, rooms, weapons;
-	Board board = Board.getInstance();
+	private Board board = Board.getInstance();
 
 	public HandGUI() {
 		Set<Card> hand = board.getPlayers().get(0).getHand();

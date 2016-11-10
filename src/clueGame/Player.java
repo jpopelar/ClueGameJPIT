@@ -11,12 +11,16 @@ import javax.swing.JPanel;
 
 import sun.java2d.pipe.DrawImagePipe;
 
-public class Player extends JPanel{
+public abstract class Player extends JPanel{
 	private String playerName;
-	private int row, col;
+	private int row;
+
+
+	private int col;
 	private Color color;
 	private Set<Card> hand;
 	private int boardSize;
+	
 	public Player(String name, int row, int col, Color color) {
 		super();
 		this.playerName = name;
@@ -48,9 +52,7 @@ public class Player extends JPanel{
 		g.drawOval((col)*boardSize, (row)*boardSize , boardSize, boardSize);
 	}
 	
-	public void makeMove() {
-		
-	}
+	public abstract void makeMove();
 	//SETTERS AND GETTERS ARE FOR TESTING PURPOSES ONLY!!!!
 	
 	public void setName(String name) {

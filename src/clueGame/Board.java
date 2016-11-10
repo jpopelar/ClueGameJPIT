@@ -67,7 +67,7 @@ public class Board extends JPanel {
 		board = new BoardCell[MAX_BOARD_SIZE][MAX_BOARD_SIZE];
 		rooms = new HashMap<Character, String>();
 		deck = new HashSet<Card>();
-		turnCounter = 0;
+		turnCounter = -1;
 	}
 
 	// method to return the initialized board
@@ -576,9 +576,8 @@ public class Board extends JPanel {
 	}
 	public void takeTurn() {
 		rollDice();
-		//Rest of stuff
-		
-		
+		players.get(whoseTurn()).makeMove();
+		turnCounter++;
 	}
 	public void rollDice() {
 		Random rand = new Random();

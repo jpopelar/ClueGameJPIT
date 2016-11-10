@@ -30,7 +30,7 @@ public class ClueGUIMain extends JFrame {
 
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setTitle("Popelar-Tobiason Clue"); 
-		setSize(550, 775);
+		setSize(665, 775);
 		detNotes = new DetNotesDialog();
 		
 		add(board, BorderLayout.CENTER);

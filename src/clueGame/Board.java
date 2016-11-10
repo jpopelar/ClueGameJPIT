@@ -37,25 +37,27 @@ public class Board extends JPanel {
 	private Set<BoardCell> targets;
 	// 
 	private Set<Card> deck;
-	
+
 	private ArrayList<Player> players;
-	
+
 	private String boardConfigFile;
 	// 
 	private String roomConfigFile;
 	// 	
 	private String peopleConfigFile;
-	
+
 	private String weaponConfigFile;
-	
+
 	private String exceptionsLog = "exceptionsLog.txt";
-	
+
 	private Solution theAnswer;
-	
+
 	private int turnCounter;
-	
+
+	private int diceRoll;
+
 	private boolean liveBoard = true; //Boolean to determine if game is still in progress
-	
+
 	// constructor to initialize all the arrays, sets, and map variables
 	// It is private so that it is initialize instantly and never changed
 	private Board() {
@@ -72,7 +74,7 @@ public class Board extends JPanel {
 	public static Board getInstance(){
 		return theInstance;
 	}
-	
+
 	// Initialize 
 	public void initialize() {
 		// Try/catch statement to catch and fix any FileNotFoundExceptions and BadConfigFormatException
@@ -81,10 +83,10 @@ public class Board extends JPanel {
 			loadRoomConfig();
 			// Read in the board information and set the cell variables
 			loadBoardConfig();
-		// catch statement for FileNotFoundException
+			// catch statement for FileNotFoundException
 		} catch (FileNotFoundException e) {
 			System.out.println("Uhhhh Ohhhhhh");
-		// catch statement for BadConfigFormatException
+			// catch statement for BadConfigFormatException
 		} catch (BadConfigFormatException f) {
 			// try/catch statement for FileNotFoundException
 			try {
@@ -94,7 +96,7 @@ public class Board extends JPanel {
 				PrintWriter out = new PrintWriter(exceptionsLog);
 				out.println(f.getMessage());
 				out.close();
-			// catch FileNotFoundException
+				// catch FileNotFoundException
 			} catch (FileNotFoundException g) {
 				System.out.println("Log file not found.");
 			}
@@ -102,7 +104,7 @@ public class Board extends JPanel {
 		// calculate adjacent cells for each cell
 		calcAdjacencies();
 	}
-	
+
 	// load the room legend from the configuration file
 	public void loadRoomConfig() throws BadConfigFormatException, FileNotFoundException{
 		// open a file reader for roomConfigFile and open scanner
@@ -135,7 +137,7 @@ public class Board extends JPanel {
 		}
 		in.close();
 	}
-	
+
 	// load the board configuration from the given configuration file
 	public void loadBoardConfig() throws FileNotFoundException, BadConfigFormatException{
 		// assign an initial value to the number of rows
@@ -162,7 +164,7 @@ public class Board extends JPanel {
 					// throw a BadConfigFormatException saying there is an invalid character in the boad configuration
 					in.close();
 					throw new BadConfigFormatException("Invalid board space Initial");
-				// if there are two characters in this character segment
+					// if there are two characters in this character segment
 				} else if (roomString.length() == 2) {
 					// assign the second character (the door direction) into a variable
 					char door = roomString.charAt(1);
@@ -186,7 +188,7 @@ public class Board extends JPanel {
 						board[numRows][numColumns].setRoomName(rooms);
 						break;
 					}
-				// else make the door direction for the current cell (using the column count and row count) none
+					// else make the door direction for the current cell (using the column count and row count) none
 				} else {
 					board[numRows][numColumns] = new BoardCell(numRows,numColumns,roomInit,DoorDirection.NONE);
 				}
@@ -202,13 +204,13 @@ public class Board extends JPanel {
 			}
 			// assign the current column count to the variable to store the last column count
 			lastColumn = numColumns;
-			
+
 			// increment the row count
 			numRows = numRows + 1;
 		}
 		in.close();
 	}
-	
+
 	public void loadPeopleConfig(){
 
 		players = new ArrayList<Player>();
@@ -250,8 +252,8 @@ public class Board extends JPanel {
 			deck.add(new Card(players.get(i).getName(), CardType.PERSON));
 		}
 	}
-	
-	
+
+
 	public void loadWeaponConfig() {
 		try {
 			FileReader reader = new FileReader(weaponConfigFile);
@@ -264,11 +266,11 @@ public class Board extends JPanel {
 			in.close();
 		} catch (FileNotFoundException e) {}
 	}
-	
+
 	public boolean checkAccusation(Solution accusation) {
 		return theAnswer.equals(accusation);
 	}
-	
+
 	// calculate the adjacent cells for each cell on the board
 	public void calcAdjacencies(){
 		// for all the rows
@@ -280,7 +282,7 @@ public class Board extends JPanel {
 			}
 		}
 	}
-	
+
 	// calculate the targets for a given cell location and path length
 	public void calcTargets(int i, int j, int pathLength){
 		// clear the visited list
@@ -292,7 +294,7 @@ public class Board extends JPanel {
 		// find all the targets for the given cell and path length
 		findAllTargets(getCellAt(i,j), pathLength);
 	}
-	
+
 	// method to find all the targets for a path, takes start cell and moves left
 	public void findAllTargets(BoardCell startCell, int pathLength){
 		// loop through the cells adjacent to the current cell
@@ -315,20 +317,20 @@ public class Board extends JPanel {
 			}
 		}
 	}
-	
+
 	// return the current target set
 	public Set<BoardCell> getTargets(){
 		return targets;
 	}
-	
+
 	// method to return the adjacent list for the cell at the given location
 	public Set<BoardCell> getAdjList(int i, int j){
 		// Initialize the adjacent set as a HashSet
 		Set<BoardCell> adjSet = new HashSet<BoardCell>();
 		// Ensures player doesn't move around in room
 		if(getCellAt(i, j).isRoom() && !getCellAt(i, j).isDoorway()){
-			
-		// if the cell at the location is a doorway
+
+			// if the cell at the location is a doorway
 		}else if(getCellAt(i, j).isRoom() && getCellAt(i,j).isDoorway()){
 			// determine the door direction and save it
 			DoorDirection whichWay = getCellAt(i,j).getDoorDirection();
@@ -349,14 +351,14 @@ public class Board extends JPanel {
 			default:
 				break;
 			}
-		// Determine if there is a door next to the current cell and add it to the adjacent list
+			// Determine if there is a door next to the current cell and add it to the adjacent list
 		}else{
 			// if the cell below is on the board
 			if((i + 1 >= 0) && (j >= 0) && (i + 1 < numRows) && (j < numColumns)){
 				// if the cell below it is a walkway, add it to the adjacent list
 				if(getCellAt(i + 1, j).isWalkway()){
 					adjSet.add(board[i +1][j]);
-				// if the cell below is a doorway
+					// if the cell below is a doorway
 				}else if(getCellAt(i + 1, j).isDoorway()){
 					// determine the direction the doorway opens
 					DoorDirection whichWay = getCellAt(i + 1, j).getDoorDirection();
@@ -379,7 +381,7 @@ public class Board extends JPanel {
 				// if the cell above is a walkway, add it to the adjacent list
 				if(getCellAt(i - 1, j).isWalkway()){
 					adjSet.add(board[i - 1][j]);
-				// if the cell above is a doorway
+					// if the cell above is a doorway
 				}else if(getCellAt(i - 1, j).isDoorway()){
 					// determine the direction the door opens
 					DoorDirection whichWay = getCellAt(i - 1, j).getDoorDirection();
@@ -402,7 +404,7 @@ public class Board extends JPanel {
 				// if the cell to the right is a walkway, add it to the adjacent list
 				if(getCellAt(i, j + 1).isWalkway()){
 					adjSet.add(board[i][j + 1]);
-				// if the cell to the right is a doorway
+					// if the cell to the right is a doorway
 				}else if(getCellAt(i, j + 1).isDoorway()){
 					// determine the direction the door opens
 					DoorDirection whichWay = getCellAt(i, j + 1).getDoorDirection();
@@ -425,7 +427,7 @@ public class Board extends JPanel {
 				// if the cell to the right is a walkway, add it to the adjacent list
 				if(getCellAt(i, j - 1).isWalkway()){
 					adjSet.add(board[i][j - 1]);
-				// if the cell to the right is a doorway
+					// if the cell to the right is a doorway
 				}else if(getCellAt(i, j - 1).isDoorway()){
 					// determine the direction the door opens
 					DoorDirection whichWay = getCellAt(i,j - 1).getDoorDirection();
@@ -451,18 +453,18 @@ public class Board extends JPanel {
 			}
 		}
 		return adjSet;
-	
+
 	}
-	
+
 	public void dealCards() {
 		int cardsDealt = 0; //Stores cards dealt
 		Set<Card> library = new HashSet<Card>(deck); //Duplicate of deck which we'll deal to players
 		Random rand = new Random(); 
-		
+
 		while (!library.isEmpty()) { //While the deck isn't empty
 			int cardToDeal = rand.nextInt() % library.size(); //Randomly generate an index of card to deal
 			Player playerToDeal = players.get(cardsDealt % numPlayers()); //Determine who's next to get a card
-			
+
 			int i = 0; //Unofficial index for cycling through library
 			for (Card c : library) {
 				if (i == cardToDeal) { //Once we find the card matching the index
@@ -475,24 +477,24 @@ public class Board extends JPanel {
 			}			
 		}		
 	}
-	
+
 	public Card handleSuggestion(Solution accusation) {
 		int turnCounter = getTurnCount(); //Useful when we go to our for loop
-		
+
 		Player accuser = players.get(whoseTurn()); //Figure out who active player is (accuser)
-		
+
 		for (int i = turnCounter; i < turnCounter+numPlayers(); i++) { //Cycle through each of the players in order of whose turn is next
 			int handToLook = i % numPlayers(); //First, figure out which player we're on
 			Player witness = players.get(handToLook); //Then get their information
 			if (witness.equals(accuser)) continue; //If it's the active player, then skip over them
-			
+
 			Card evidence = witness.disproveSuggestion(accusation); //Otherwise, get them to (try) disprove
 			if (evidence != null) return evidence; //If they can, return that card
 		}
-		
+
 		return null; //If nobody can disprove, return null
 	}
-	
+
 	// Return the cell at the given row and column location
 	public BoardCell getCellAt(int r, int c) {
 		return board[r][c];
@@ -505,7 +507,7 @@ public class Board extends JPanel {
 		// initialize the name of the configuration file for the room legend
 		roomConfigFile = string2;
 	}
-	
+
 	public boolean isLive() {
 		return liveBoard;
 	}
@@ -524,43 +526,43 @@ public class Board extends JPanel {
 	public int getNumColumns() {
 		return numColumns;
 	}
-	
+
 	public void setPeopleFile(String file) {
 		peopleConfigFile = file;
 	}
-	
+
 	public void setWeaponFile(String file) {
 		weaponConfigFile = file;
 	}
-	
+
 	public ArrayList<Player> getPlayers() {
 		return players;
 	}
-	
+
 	public Set<Card> getDeck() {
 		return deck;
 	}
-	
+
 	public int numPlayers() {
 		return players.size();
 	}
-	
+
 	public void setSolution(Solution answer) {
 		this.theAnswer = answer;
 	}
-	
+
 	public void setTurnCount(int turn) {
 		this.turnCounter = turn;
 	}
-	
+
 	public int getTurnCount() {
 		return turnCounter;
 	}
-	
+
 	public int whoseTurn() {
 		return turnCounter % numPlayers();
 	}
-	
+
 	public void paintComponent(Graphics g) {
 		super.paintComponent(g);
 		for(int i = 0; i < numRows; i++) {
@@ -571,5 +573,19 @@ public class Board extends JPanel {
 		for(int i = 0; i < players.size(); i++) {
 			players.get(i).draw(g);
 		}
+	}
+	public void takeTurn() {
+		rollDice();
+		//Rest of stuff
+		
+		
+	}
+	public void rollDice() {
+		Random rand = new Random();
+		diceRoll = (rand.nextInt() % 6) + 1;
+	}
+
+	public int getDiceRoll() {
+		return diceRoll;
 	}
 }

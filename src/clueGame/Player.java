@@ -48,6 +48,9 @@ public class Player extends JPanel{
 		g.drawOval((col)*boardSize, (row)*boardSize , boardSize, boardSize);
 	}
 	
+	public void makeMove() {
+		
+	}
 	//SETTERS AND GETTERS ARE FOR TESTING PURPOSES ONLY!!!!
 	
 	public void setName(String name) {

@@ -84,6 +84,16 @@ public class ComputerPlayer extends Player {
 		suggestion = new Solution(person, weapon, room); //Prepare the suggestion and send it
 		return suggestion;
 	}
+	public void makeMove() {
+		board.calcTargets(getRow(), getCol(), board.getDiceRoll());
+		Set<BoardCell> targets = board.getTargets();
+		BoardCell chosenBoardCell = pickLocation(targets);
+		super.setLocation(chosenBoardCell.getRow(), chosenBoardCell.getColumn());
+		if(chosenBoardCell.isRoom()) {
+			Solution guess = createSuggestion();
+			board.handleSuggestion(guess);
+		}
+	}
 	
 	public void setLastRoom(String lastRoom) {
 		this.lastRoom = lastRoom;

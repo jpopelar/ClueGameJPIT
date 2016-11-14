@@ -84,6 +84,7 @@ public class ClueGUIMain extends JFrame {
 	public static void main(String[] args) {
 		ClueGUIMain frame = new ClueGUIMain();
 		frame.setVisible(true);
+		
 	}
 	
 }

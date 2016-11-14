@@ -3,6 +3,7 @@ package clueGame;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.util.Map;
+import java.util.Set;
 
 import javax.swing.JPanel;
 
@@ -19,7 +20,7 @@ public class BoardCell extends JPanel {
 	private boolean isNameLocation = false;
 	private int boardSize;
 
-
+	Board board = Board.getInstance();
 
 	// constructor to set the initial variables
 	public BoardCell(int row, int column, char initial, DoorDirection opensWhichWay) {
@@ -43,7 +44,7 @@ public class BoardCell extends JPanel {
 	}
 
 	// Determine if the cell is a Doorway
-	public boolean isDoorway(){
+	public boolean isDoorway() {
 		return opensWhichWay != DoorDirection.NONE;
 	}
 
@@ -91,17 +92,20 @@ public class BoardCell extends JPanel {
 		return ((this.getRow() == cell.getRow()) && (this.getColumn() == cell.getColumn()));
 	}
 	
-	public void draw(Graphics g) {
+	public void draw(Graphics g) {		
+		Set<BoardCell> targets = board.getTargets();
 		if (isWalkway()) {
 			//System.out.println("Good 1");
-			g.setColor(Color.white);
+			if (targets.contains(board.getCellAt(this.row, this.column))) g.setColor(Color.blue);
+			else g.setColor(Color.white);
 			g.fillRect(column*boardSize,row*boardSize,boardSize,boardSize);
 			g.setColor(Color.black);
 			g.drawRect(column*boardSize,row*boardSize,boardSize,boardSize);
 		}
+		
 		else {
-			//System.out.println("Good 2");
-			g.setColor(Color.gray);
+			if (targets.contains(board.getCellAt(this.row, this.column))) g.setColor(Color.blue);
+			else g.setColor(Color.gray);
 			g.fillRect(column*boardSize,row*boardSize,boardSize,boardSize);
 			if(isDoorway()) {
 				g.setColor(Color.black);

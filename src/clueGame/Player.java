@@ -14,8 +14,6 @@ import sun.java2d.pipe.DrawImagePipe;
 public abstract class Player extends JPanel{
 	private String playerName;
 	private int row;
-
-
 	private int col;
 	private Color color;
 	private Set<Card> hand;
@@ -90,5 +88,5 @@ public abstract class Player extends JPanel{
 
 	public void giveCard(Card targetCard) {
 		hand.add(targetCard);
-	} 
+	} 	
 }

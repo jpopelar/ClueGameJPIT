@@ -111,6 +111,8 @@ public class DetNotesDialog extends JDialog {
 			String name = c.getName();
 			suspect.addItem(name);
 		}
+		
+		suspect.addItem("Unknown");
 		panel.add(suspect);
 		panel.setBorder(new TitledBorder(new EtchedBorder(), "Prime Suspect"));
 		return panel;
@@ -124,6 +126,8 @@ public class DetNotesDialog extends JDialog {
 			String name = c.getName();
 			suspect.addItem(name);
 		}
+		
+		suspect.addItem("Unknown");
 		panel.add(suspect);
 		panel.setBorder(new TitledBorder(new EtchedBorder(), "Potential Weapon"));
 		return panel;
@@ -137,6 +141,8 @@ public class DetNotesDialog extends JDialog {
 			String name = c.getName();
 			suspect.addItem(name);
 		}
+		
+		suspect.addItem("Unknown");
 		panel.add(suspect);
 		panel.setBorder(new TitledBorder(new EtchedBorder(), "Murder Room"));
 		return panel;

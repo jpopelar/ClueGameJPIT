@@ -2,6 +2,8 @@ package clueGame;
 
 import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.PrintWriter;
@@ -13,6 +15,7 @@ import java.util.Random;
 import java.util.Scanner;
 import java.util.Set;
 
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 public class Board extends JPanel {
@@ -37,6 +40,8 @@ public class Board extends JPanel {
 	private Set<BoardCell> targets;
 	// 
 	private Set<Card> deck;
+	
+	private BoardCell targetSpace;
 
 	private ArrayList<Player> players;
 
@@ -56,7 +61,9 @@ public class Board extends JPanel {
 
 	private int diceRoll;
 
-	private boolean liveBoard = true; //Boolean to determine if game is still in progress
+	private boolean liveBoard = true; //Boolean to determine if game is still in progress	
+
+	public MoveListener toMove = new MoveListener();
 
 	// constructor to initialize all the arrays, sets, and map variables
 	// It is private so that it is initialize instantly and never changed
@@ -67,7 +74,8 @@ public class Board extends JPanel {
 		board = new BoardCell[MAX_BOARD_SIZE][MAX_BOARD_SIZE];
 		rooms = new HashMap<Character, String>();
 		deck = new HashSet<Card>();
-		turnCounter = -1;
+		turnCounter = 0;
+		addMouseListener(toMove);
 	}
 
 	// method to return the initialized board
@@ -598,6 +606,7 @@ public class Board extends JPanel {
 
 	public void paintComponent(Graphics g) {
 		super.paintComponent(g);
+		
 		for(int i = 0; i < numRows; i++) {
 			for(int j = 0; j < numColumns; j++) {
 				board[i][j].draw(g);
@@ -606,22 +615,63 @@ public class Board extends JPanel {
 		for(int i = 0; i < players.size(); i++) {
 			players.get(i).draw(g);
 		}
+		
 	}
-	public void takeTurn() {
-		rollDice();
-		players.get(whoseTurn()).makeMove();
-		turnCounter++;
-	}
+		
 	public void rollDice() {
 		Random rand = new Random();
-		diceRoll = (rand.nextInt() % 6) + 1;
+		diceRoll = (rand.nextInt(6)) + 1;
 	}
 
 	public int getDiceRoll() {
 		return diceRoll;
 	}
-	
-	public Solution getAnswer() {
-		return theAnswer;
+
+	public class MoveListener implements MouseListener {
+		private BoardCell targetSpace = null;
+
+		public void mouseClicked(MouseEvent arg0) {
+			Set<BoardCell> targets = getTargets();
+			
+			if (whoseTurn() == 0) {
+				int xClick = arg0.getX();
+				int yClick = arg0.getY();
+				
+				int clickedRow = yClick / SQUARE_SIZE;
+				int clickedCol = xClick / SQUARE_SIZE;
+				
+				targetSpace = getCellAt(clickedRow, clickedCol);
+				
+				if (targets.contains(targetSpace)) {
+
+					HumanPlayer.playerMustFinish = false;
+					players.get(0).setLocation(clickedRow, clickedCol);
+					advanceTurn();
+					getTargets().clear();
+					repaint();
+				}
+				
+				else {
+					JOptionPane.showMessageDialog(null, "That cell is not a target. Try again.");
+				}
+			}
+			
+		}
+
+		public void mouseEntered(MouseEvent arg0) {}
+
+		public void mouseExited(MouseEvent arg0) {}
+
+		public void mousePressed(MouseEvent arg0) {}
+
+		public void mouseReleased(MouseEvent arg0) {}
+		
 	}
+
+	public void advanceTurn() {
+		turnCounter++;
+	}
+
+	
+>>>>>>> 179eec6a7366c01737ab9cf9e80183cecb7fa780
 }

@@ -84,11 +84,19 @@ public class ComputerPlayer extends Player {
 		suggestion = new Solution(person, weapon, room); //Prepare the suggestion and send it
 		return suggestion;
 	}
+	
 	public void makeMove() {
+		//System.out.println("Made it into computer: " + board.getPlayers().get(board.whoseTurn()).getName());
 		board.calcTargets(getRow(), getCol(), board.getDiceRoll());
 		Set<BoardCell> targets = board.getTargets();
+		
+		//System.out.println(targets); //for testing
+		
 		BoardCell chosenBoardCell = pickLocation(targets);
-		super.setLocation(chosenBoardCell.getRow(), chosenBoardCell.getColumn());
+		
+		//System.out.println(chosenBoardCell);
+		
+		setLocation(chosenBoardCell.getRow(), chosenBoardCell.getColumn());
 		if(chosenBoardCell.isRoom()) {
 			Solution guess = createSuggestion();
 			//display guess
@@ -97,6 +105,10 @@ public class ComputerPlayer extends Player {
 		}
 		
 		board.repaint();
+		
+		board.getTargets().clear();
+		board.repaint();
+		board.advanceTurn();
 	}
 	
 	public void setLastRoom(String lastRoom) {
@@ -116,5 +128,6 @@ public class ComputerPlayer extends Player {
 		
 		return legend.get(board.getCellAt(getRow(), getCol()).getInitial());
 	}
+
 	
 }

@@ -16,6 +16,7 @@ public class ComputerPlayer extends Player {
 		super(name, row, col, color);
 		board = Board.getInstance();
 		detNotes= new HashSet<Card>(); //Stores unseen cards
+		detNotes = board.getDeck();
 	}
 
 	public BoardCell pickLocation(Set<BoardCell> targets) {
@@ -102,6 +103,7 @@ public class ComputerPlayer extends Player {
 			//display guess
 			board.handleSuggestion(guess);
 			//display disprove
+			board.suggMade = true; //DO THIS FOR HOOMAN
 		}
 		
 		board.repaint();

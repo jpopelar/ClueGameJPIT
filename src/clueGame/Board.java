@@ -60,6 +60,12 @@ public class Board extends JPanel {
 	private int turnCounter;
 
 	private int diceRoll;
+	
+	public boolean suggMade = false;
+	
+	public Solution lastSuggestion;
+	
+	private Card evidence;
 
 	private boolean liveBoard = true; //Boolean to determine if game is still in progress	
 
@@ -517,7 +523,7 @@ public class Board extends JPanel {
 
 	public Card handleSuggestion(Solution accusation) {
 		//First, the accused player needs to teleport to the accuser's location
-		
+		lastSuggestion = accusation;
 		int turnCounter = getTurnCount(); //Useful when we go to our for loop
 
 		Player accuser = players.get(whoseTurn()); //Figure out who active player is (accuser)
@@ -529,10 +535,13 @@ public class Board extends JPanel {
 			Player witness = players.get(handToLook); //Then get their information
 			if (witness.equals(accuser)) continue; //If it's the active player, then skip over them
 
-			Card evidence = witness.disproveSuggestion(accusation); //Otherwise, get them to (try) disprove
-			if (evidence != null) return evidence; //If they can, return that card
+			Card persEvidence = witness.disproveSuggestion(accusation); //Otherwise, get them to (try) disprove
+			if (persEvidence != null) {
+				evidence = persEvidence;
+				return persEvidence; //If they can, return that card
+			}
 		}
-
+		evidence = null;
 		return null; //If nobody can disprove, return null
 	}
 
@@ -626,6 +635,10 @@ public class Board extends JPanel {
 	public int getDiceRoll() {
 		return diceRoll;
 	}
+	
+	public Solution getAnswer() {
+		return theAnswer;
+	}
 
 	public class MoveListener implements MouseListener {
 		private BoardCell targetSpace = null;
@@ -671,7 +684,9 @@ public class Board extends JPanel {
 	public void advanceTurn() {
 		turnCounter++;
 	}
-
 	
->>>>>>> 179eec6a7366c01737ab9cf9e80183cecb7fa780
+	public Card getEvidence() {
+		return evidence;
+	}
+
 }

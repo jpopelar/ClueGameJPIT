@@ -72,7 +72,7 @@ public class ControlGUI extends JPanel {
 		roll.setBorder(new TitledBorder(new EtchedBorder(), "Dice"));
 
 		guess.setLayout(new GridLayout(2,0));
-		guessField = new JTextField(20);
+		guessField = new JTextField(30);
 		guessField.setEditable(false);
 		JLabel textLabel2 = new JLabel("Sugestion");
 		guess.add(textLabel2, BorderLayout.NORTH);
@@ -80,7 +80,7 @@ public class ControlGUI extends JPanel {
 		guess.setBorder(new TitledBorder(new EtchedBorder(), "Insinuations"));
 
 		result.setLayout(new GridLayout(2,0));
-		resultField = new JTextField(10);
+		resultField = new JTextField(15);
 		resultField.setEditable(false);
 		JLabel textLabel3 = new JLabel("Evidence");
 		result.add(textLabel3, BorderLayout.NORTH);
@@ -97,10 +97,23 @@ public class ControlGUI extends JPanel {
 		public void actionPerformed(ActionEvent e) {
 			if (!HumanPlayer.playerMustFinish){
 				board.getTargets().clear();
+				board.suggMade = false;
+				board.lastSuggestion = null;
 				board.rollDice();
 				rollField.setText(Integer.toString(board.getDiceRoll()));
 				turn.setText(board.getPlayers().get(board.whoseTurn()).getName());
 				board.getPlayers().get(board.whoseTurn()).makeMove();
+				
+				if (board.suggMade) {
+					guessField.setText(board.lastSuggestion.person + " in the " + board.lastSuggestion.room + " with a " + board.lastSuggestion.weapon);
+					if (board.getEvidence() != null) resultField.setText(board.getEvidence().getName());
+					else resultField.setText("No new evidence");
+				}
+				else {
+					guessField.setText(" ");
+					resultField.setText(" ");
+				}
+				
 				board.repaint();
 			}
 			else {

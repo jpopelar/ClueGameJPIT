@@ -459,7 +459,36 @@ public class Board extends JPanel {
 	public void dealCards() {
 		int cardsDealt = 0; //Stores cards dealt
 		Set<Card> library = new HashSet<Card>(deck); //Duplicate of deck which we'll deal to players
+		
+		ArrayList<Card> people = new ArrayList<Card>();
+		ArrayList<Card> rooms = new ArrayList<Card>();
+		ArrayList<Card> weapons = new ArrayList<Card>();
+		
+		for (Card c: library) {
+			switch (c.getType()) {
+			case WEAPON:
+				weapons.add(c);
+			case ROOM:
+				rooms.add(c);
+			case PERSON:
+				people.add(c);
+			default:
+			}
+		}
+		
 		Random rand = new Random(); 
+		
+		//Make a solution
+		
+		Card thePerson = people.get(rand.nextInt(people.size()));
+		Card theRoom = rooms.get(rand.nextInt(rooms.size()));
+		Card theWeapon = weapons.get(rand.nextInt(weapons.size()));
+		
+		theAnswer = new Solution(thePerson.getName(), theWeapon.getName(), theRoom.getName());
+		
+		library.remove(thePerson);
+		library.remove(theRoom);
+		library.remove(theWeapon);
 
 		while (!library.isEmpty()) { //While the deck isn't empty
 			int cardToDeal = rand.nextInt() % library.size(); //Randomly generate an index of card to deal
@@ -479,9 +508,13 @@ public class Board extends JPanel {
 	}
 
 	public Card handleSuggestion(Solution accusation) {
+		//First, the accused player needs to teleport to the accuser's location
+		
 		int turnCounter = getTurnCount(); //Useful when we go to our for loop
 
 		Player accuser = players.get(whoseTurn()); //Figure out who active player is (accuser)
+		
+		for (Player p: players) if (p.getName().equals(accusation.person)) p.setLocation(accuser.getRow(),accuser.getCol());
 
 		for (int i = turnCounter; i < turnCounter+numPlayers(); i++) { //Cycle through each of the players in order of whose turn is next
 			int handToLook = i % numPlayers(); //First, figure out which player we're on
@@ -586,5 +619,9 @@ public class Board extends JPanel {
 
 	public int getDiceRoll() {
 		return diceRoll;
+	}
+	
+	public Solution getAnswer() {
+		return theAnswer;
 	}
 }

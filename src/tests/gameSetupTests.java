@@ -124,6 +124,12 @@ public class gameSetupTests {
 			Set<Card> theirHand = p.getHand();
 			for (Card c : theirHand) cardsDealt.add(c); //Scan through each player's hand, add their cards to the dealt set
 		}
+		
+		for (Card c : deck) {
+			String cardName = c.getName();
+			if (cardName.equals(board.getAnswer().person) || cardName.equals(board.getAnswer().weapon) || cardName.equals(board.getAnswer().room))
+				cardsDealt.add(c);
+		}
 
 		assert(deck.equals(cardsDealt)); //Check to make sure the deck and dealt sets are the same, then all cards were dealt
 		
@@ -142,9 +148,8 @@ public class gameSetupTests {
 		}
 		
 		int normalHandSize = 3;
-		int largeHandSize = 4; //For a 21 card deck, each player's hand will have 3 or 4 cards
 
-		for (Player p : players) assert((p.getHand().size() == normalHandSize) || (p.getHand().size() == largeHandSize)); //Check that for each player's hand		
+		for (Player p : players) assert((p.getHand().size() == normalHandSize)); //Check that for each player's hand		
 
 		
 	}

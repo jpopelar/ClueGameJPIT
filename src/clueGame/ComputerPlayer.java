@@ -91,8 +91,12 @@ public class ComputerPlayer extends Player {
 		super.setLocation(chosenBoardCell.getRow(), chosenBoardCell.getColumn());
 		if(chosenBoardCell.isRoom()) {
 			Solution guess = createSuggestion();
+			//display guess
 			board.handleSuggestion(guess);
+			//display disprove
 		}
+		
+		board.repaint();
 	}
 	
 	public void setLastRoom(String lastRoom) {

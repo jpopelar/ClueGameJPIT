@@ -18,6 +18,8 @@ import java.util.Set;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
+import gui.HumSuggDialog;
+
 public class Board extends JPanel {
 	// variable to store the initialized board
 	private static Board theInstance = new Board();
@@ -70,6 +72,8 @@ public class Board extends JPanel {
 	private boolean liveBoard = true; //Boolean to determine if game is still in progress	
 
 	public MoveListener toMove = new MoveListener();
+	
+	private String personGuess, weaponGuess, roomGuess;
 
 	// constructor to initialize all the arrays, sets, and map variables
 	// It is private so that it is initialize instantly and never changed
@@ -662,6 +666,10 @@ public class Board extends JPanel {
 					advanceTurn();
 					getTargets().clear();
 					repaint();
+					
+					if (targetSpace.isRoom()) {
+						HumSuggDialog humSugg = new HumSuggDialog();
+					}
 				}
 				
 				else {
@@ -687,6 +695,17 @@ public class Board extends JPanel {
 	
 	public Card getEvidence() {
 		return evidence;
+	}
+	
+	public String translate(char cellAbb) {
+		if (rooms.containsKey(cellAbb)) return rooms.get(cellAbb);
+		return null;
+	}
+	
+	public void setSugg(String room, String person, String weapon) {
+		roomGuess = room;
+		personGuess = person;
+		weaponGuess = weapon;
 	}
 
 }

@@ -21,18 +21,7 @@ public class HumanPlayer extends Player {
 		//System.out.println(targets);
 		board.repaint();
 		
-		playerMustFinish = true;
-		
-		/*if(chosenBoardCell.isRoom()) {
-			Solution guess = null;
-			
-			// get guess from user
-			
-			board.handleSuggestion(guess);
-		}*/
-		
-		//board.getTargets().clear();
-		
+		playerMustFinish = true;		
 	}
 	
 }

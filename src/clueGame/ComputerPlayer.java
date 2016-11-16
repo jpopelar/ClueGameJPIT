@@ -7,11 +7,15 @@ import java.util.Map;
 import java.util.Random;
 import java.util.Set;
 
+import javax.swing.JOptionPane;
+
 public class ComputerPlayer extends Player {
 	private String lastRoom;
 	private static Board board;
 	private Set<Card> detNotes;
-	private Solution suggestion;
+	private Solution suggestion, lastGuess;
+	private boolean accReady = false;
+	
 	public ComputerPlayer(String name, int row, int col, Color color) {
 		super(name, row, col, color);
 		board = Board.getInstance();
@@ -52,12 +56,21 @@ public class ComputerPlayer extends Player {
 	}
 	
 	public void makeAccusation() {
+		accReady = false;
+		if (board.checkAccusation(lastGuess)) {
+			JOptionPane.showMessageDialog(null, getName() + " accused " + lastGuess.person + " in the " + lastGuess.room + " with the " + lastGuess.weapon + " and was correct! They win!");
+			board.setLive(false);
+		}
 		
+		else {
+			JOptionPane.showMessageDialog(null, getName() + " falsely accused " + lastGuess.person + " in the " + lastGuess.room + " with the " + lastGuess.weapon + ".");
+		}
 	}
 
 	public Solution createSuggestion() {
 		String room, weapon, person; 
 		room = getRoom(); //Room is always whatever room the player is in
+		lastRoom = getRoom();
 		
 		ArrayList<Card> weapons = new ArrayList<Card>(); 
 		ArrayList<Card> people = new ArrayList<Card>(); //Make lists of weapons and people the CPU hasn't seen yet
@@ -87,27 +100,36 @@ public class ComputerPlayer extends Player {
 	}
 	
 	public void makeMove() {
-		//System.out.println("Made it into computer: " + board.getPlayers().get(board.whoseTurn()).getName());
-		board.calcTargets(getRow(), getCol(), board.getDiceRoll());
-		Set<BoardCell> targets = board.getTargets();
-		
-		//System.out.println(targets); //for testing
-		
-		BoardCell chosenBoardCell = pickLocation(targets);
-		
-		//System.out.println(chosenBoardCell);
-		
-		setLocation(chosenBoardCell.getRow(), chosenBoardCell.getColumn());
-		if(chosenBoardCell.isRoom()) {
-			Solution guess = createSuggestion();
-			//display guess
-			board.handleSuggestion(guess);
-			//display disprove
-			board.suggMade = true; //DO THIS FOR HOOMAN
+		if (accReady) {
+			makeAccusation();
 		}
 		
-		board.repaint();
-		
+		else {
+			//System.out.println("Made it into computer: " + board.getPlayers().get(board.whoseTurn()).getName());
+			board.calcTargets(getRow(), getCol(), board.getDiceRoll());
+			Set<BoardCell> targets = board.getTargets();
+
+			//System.out.println(targets); //for testing
+
+			BoardCell chosenBoardCell = pickLocation(targets);
+
+			//System.out.println(chosenBoardCell);
+
+			setLocation(chosenBoardCell.getRow(), chosenBoardCell.getColumn());
+			if(chosenBoardCell.isRoom()) {
+				Solution guess = createSuggestion();
+				Card evidence = board.handleSuggestion(guess);
+				if ((evidence == null) && (roomCheck(guess.room))) {
+					accReady = true;
+					lastGuess = guess;
+				}
+				
+				else detNotes.remove(evidence);
+				board.suggMade = true; //DO THIS FOR HOOMAN
+			}
+
+			board.repaint();
+		}
 		board.getTargets().clear();
 		board.repaint();
 		board.advanceTurn();
@@ -125,11 +147,18 @@ public class ComputerPlayer extends Player {
 		detNotes.clear();
 	}
 	
+	public Set<Card> getNotes() {
+		return detNotes;
+	}
+	
 	public String getRoom() {
 		Map<Character,String> legend = board.getLegend();
 		
 		return legend.get(board.getCellAt(getRow(), getCol()).getInitial());
 	}
 
-	
+	private boolean roomCheck(String room) {
+		for (Card c : getHand()) if (c.getName().equals(room)) return false;
+		return true;
+	}
 }

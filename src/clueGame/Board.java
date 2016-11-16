@@ -18,8 +18,6 @@ import java.util.Set;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
-import gui.HumSuggDialog;
-
 public class Board extends JPanel {
 	// variable to store the initialized board
 	private static Board theInstance = new Board();
@@ -668,7 +666,9 @@ public class Board extends JPanel {
 					repaint();
 					
 					if (targetSpace.isRoom()) {
-						HumSuggDialog humSugg = new HumSuggDialog();
+						/*HumSuggDialog humSugg = new HumSuggDialog();
+						humSugg.setVisible(true);
+						*/
 					}
 				}
 				
@@ -707,5 +707,9 @@ public class Board extends JPanel {
 		personGuess = person;
 		weaponGuess = weapon;
 	}
+	
+	public void setLive(boolean live) {
+		this.liveBoard = live;
+	}	
 
 }

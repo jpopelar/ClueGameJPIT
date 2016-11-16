@@ -47,6 +47,7 @@ public class ControlGUI extends JPanel {
 		JButton passTurn = new JButton("Next Player");
 		passTurn.addActionListener(new TurnListener());
 		JButton accuse = new JButton("Accuse a Player");
+		accuse.addActionListener(new AccuseListener());
 
 		mainPanel.add(textPanel, BorderLayout.WEST);
 		mainPanel.add(passTurn, BorderLayout.EAST);
@@ -96,9 +97,12 @@ public class ControlGUI extends JPanel {
 	private class TurnListener implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
 			if (!HumanPlayer.playerMustFinish){
+				//Cleanup
 				board.getTargets().clear();
 				board.suggMade = false;
 				board.lastSuggestion = null;
+				
+				//Action
 				board.rollDice();
 				rollField.setText(Integer.toString(board.getDiceRoll()));
 				turn.setText(board.getPlayers().get(board.whoseTurn()).getName());
@@ -114,10 +118,23 @@ public class ControlGUI extends JPanel {
 					resultField.setText(" ");
 				}
 				
+				if (!board.isLive()) setVisible(false);
 				board.repaint();
 			}
 			else {
 				JOptionPane.showMessageDialog(null, "You need to complete your turn first.");
+			}
+		}
+	}
+	
+	private class AccuseListener implements ActionListener {
+		public void actionPerformed(ActionEvent e) {
+			if (HumanPlayer.playerMustFinish) {
+				
+			}
+			
+			else {
+				JOptionPane.showMessageDialog(null, "You can only accuse a player on your own turn before you move.");
 			}
 		}
 	}

@@ -8,6 +8,7 @@ import java.util.Set;
 public class HumanPlayer extends Player {
 	Board board = Board.getInstance();
 	public static boolean playerMustFinish = false;
+	public static boolean madeSugg = false;
 
 	public HumanPlayer(String name, int row, int col, Color color) {
 		super(name, row, col, color);

@@ -11,6 +11,7 @@ import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
@@ -19,21 +20,21 @@ import clueGame.Card;
 import clueGame.HumanPlayer;
 import clueGame.Solution;
 
-public class HumSuggDialog extends JDialog{
-	
+public class AccDialog extends JDialog {
 	Board board = Board.getInstance();
-	private Set<Card> weapons, people;
-	public JComboBox<String> thePeople, theWeapons;
+	ClueGUIMain mainGui = ClueGUIMain.getInstance();
+	private Set<Card> weapons, people, rooms;
+	public JComboBox<String> thePeople, theWeapons, theRooms;
 	
 
 	private boolean submit = false;
-
-	public HumSuggDialog() {
+	public AccDialog() {
 		super();
 
 		Set<Card> deck = board.getDeck();
 		weapons = new HashSet<Card>();
 		people = new HashSet<Card>();
+		rooms = new HashSet<Card>();
 
 		for (Card c : deck) {
 			switch (c.getType()) {
@@ -42,6 +43,9 @@ public class HumSuggDialog extends JDialog{
 				break;
 			case PERSON:
 				people.add(c);
+				break;
+			case ROOM:
+				rooms.add(c);
 				break;
 			default:
 			}
@@ -54,7 +58,9 @@ public class HumSuggDialog extends JDialog{
 		mainPanel.add(weaponSelect());
 		
 		JButton button1 = new JButton("Submit");
+		JButton button2 = new JButton("Cancel");
 		button1.addActionListener(new SubmitListener());
+		button2.addActionListener(new CancelListener());
 		
 		add(mainPanel, BorderLayout.CENTER);
 		
@@ -62,6 +68,7 @@ public class HumSuggDialog extends JDialog{
 		southPanel.setLayout(new GridLayout(1,2));
 		
 		southPanel.add(button1);
+		southPanel.add(button2);
 		mainPanel.add(southPanel, BorderLayout.SOUTH);
 		
 		setTitle("Detective Notes");
@@ -97,14 +104,13 @@ public class HumSuggDialog extends JDialog{
 	public JPanel roomSelect() {
 		JPanel panel = new JPanel();
 		JLabel label = new JLabel();
-		JTextField location = new JTextField(15);
+		theRooms = new JComboBox<String>();
 		
-		label.setText("Your room");
-		location.setEditable(false);
-		location.setText(board.translate(board.getCellAt(board.getPlayers().get(0).getRow(), board.getPlayers().get(0).getCol()).getInitial()));
+		label.setText("Crime scene");
+		for (Card c : rooms) theRooms.addItem(c.getName());
 		
 		panel.add(label, BorderLayout.WEST);
-		panel.add(location, BorderLayout.EAST);
+		panel.add(theRooms, BorderLayout.EAST);
 		return panel;
 	}
 
@@ -117,18 +123,34 @@ public class HumSuggDialog extends JDialog{
 			submit = true;
 			String weaponSugg = (String)theWeapons.getSelectedItem();
 			String personSugg = (String)thePeople.getSelectedItem();
-						
-			board.suggMade = true;
-			HumanPlayer.madeSugg = true;
+			String roomSugg = (String)theRooms.getSelectedItem();
 			
-			Solution sugg = new Solution(personSugg, weaponSugg, board.translate(board.getCellAt(board.getPlayers().get(0).getRow(), board.getPlayers().get(0).getCol()).getInitial()));
-			Card evidence = board.handleSuggestion(sugg);			
-			setVisible(false);
-			ControlGUI.updateBoxes(sugg, evidence);			
-			board.advanceTurn();
+			Solution finalAnswer = new Solution(personSugg, weaponSugg, roomSugg);
+			
+			if (board.checkAccusation(finalAnswer)) {
+				JOptionPane.showMessageDialog(null, "Well done! You win!!");
+				setVisible(false);
+				mainGui.shutDown();
+			}
+			
+			else {
+				JOptionPane.showMessageDialog(null, "You falsely accused " + personSugg + " in the " + roomSugg + " with the " + weaponSugg + ".");
+				setVisible(false);
+				HumanPlayer.playerMustFinish = false;
+				board.advanceTurn();
+				board.getTargets().clear();
+				board.repaint();
+			}
 		}
 		
 	}
+	
+	private class CancelListener implements ActionListener {
+		public void actionPerformed(ActionEvent arg0) {
+			setVisible(false);
+		}
+	}
+	
 	public JComboBox<String> getThePeople() {
 		return thePeople;
 	}

@@ -15,12 +15,17 @@ import javax.swing.border.EtchedBorder;
 import javax.swing.border.TitledBorder;
 
 import clueGame.Board;
+import clueGame.Card;
 import clueGame.HumanPlayer;
+import clueGame.Solution;
 
 public class ControlGUI extends JPanel {
 	private static final long serialVersionUID = 1L;
 	Board board = Board.getInstance();
-	private JTextField turn, rollField, guessField, resultField;
+	ClueGUIMain mainGui = ClueGUIMain.getInstance();
+	private JTextField turn, rollField;
+	private static JTextField guessField;
+	private static JTextField resultField;
 
 
 	public ControlGUI() {
@@ -93,10 +98,16 @@ public class ControlGUI extends JPanel {
 		mainPanel.add(result);
 		return mainPanel;
 	}
+	
+	public static void updateBoxes(Solution suggestion, Card evidence) {
+		guessField.setText(suggestion.person + " in the " + suggestion.room + " with a " + suggestion.weapon);
+		if (evidence != null) resultField.setText(evidence.getName());
+		else resultField.setText("No new evidence");
+	}
 
 	private class TurnListener implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
-			if (!HumanPlayer.playerMustFinish){
+			if (!HumanPlayer.playerMustFinish || HumanPlayer.madeSugg){
 				//Cleanup
 				board.getTargets().clear();
 				board.suggMade = false;
@@ -118,8 +129,7 @@ public class ControlGUI extends JPanel {
 					resultField.setText(" ");
 				}
 				
-				if (!board.isLive()) setVisible(false);
-				board.repaint();
+				if (!board.isLive()) mainGui.shutDown();
 			}
 			else {
 				JOptionPane.showMessageDialog(null, "You need to complete your turn first.");
@@ -130,7 +140,8 @@ public class ControlGUI extends JPanel {
 	private class AccuseListener implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
 			if (HumanPlayer.playerMustFinish) {
-				
+				AccDialog accSugg = new AccDialog();
+				accSugg.setVisible(true);
 			}
 			
 			else {

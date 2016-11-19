@@ -9,6 +9,8 @@ import java.util.Set;
 
 import javax.swing.JOptionPane;
 
+import gui.ClueGUIMain;
+
 public class ComputerPlayer extends Player {
 	private String lastRoom;
 	private static Board board;
@@ -19,7 +21,7 @@ public class ComputerPlayer extends Player {
 	public ComputerPlayer(String name, int row, int col, Color color) {
 		super(name, row, col, color);
 		board = Board.getInstance();
-		detNotes= new HashSet<Card>(); //Stores unseen cards
+		detNotes= new HashSet<Card>(board.getDeck()); //Stores unseen cards
 		detNotes = board.getDeck();
 	}
 
@@ -58,7 +60,7 @@ public class ComputerPlayer extends Player {
 	public void makeAccusation() {
 		accReady = false;
 		if (board.checkAccusation(lastGuess)) {
-			JOptionPane.showMessageDialog(null, getName() + " accused " + lastGuess.person + " in the " + lastGuess.room + " with the " + lastGuess.weapon + " and was correct! They win!");
+			JOptionPane.showMessageDialog(null, getName() + " accused " + lastGuess.person + " in the " + lastGuess.room + " with the " + lastGuess.weapon + " and was correct! Press Next Player to end game.");
 			board.setLive(false);
 		}
 		
@@ -124,7 +126,7 @@ public class ComputerPlayer extends Player {
 					lastGuess = guess;
 				}
 				
-				else detNotes.remove(evidence);
+				//else detNotes.remove(evidence);
 				board.suggMade = true; //DO THIS FOR HOOMAN
 			}
 

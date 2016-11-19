@@ -14,8 +14,10 @@ import javax.swing.JOptionPane;
 import clueGame.Board;
 
 public class ClueGUIMain extends JFrame {
+	private static ClueGUIMain theFrame = new ClueGUIMain();
 	private DetNotesDialog detNotes;
 	Board board = Board.getInstance();
+	
 	
 	public ClueGUIMain() {
 		board.setConfigFiles("TCJPClueLayout.csv", "TCJPClueLayoutLegend.txt");		
@@ -47,8 +49,11 @@ public class ClueGUIMain extends JFrame {
 		
 		JOptionPane pane = new JOptionPane();
 		pane.showMessageDialog(this, "You are " + board.getPlayers().get(0).getName() + ". Press Next Player to start!", "Welcome to Clue", JOptionPane.INFORMATION_MESSAGE);
-		
-		
+				
+	}
+	
+	public static ClueGUIMain getInstance() {
+		return theFrame;
 	}
 	
 	
@@ -81,10 +86,12 @@ public class ClueGUIMain extends JFrame {
 		return item;
 	}
 	
+	public void shutDown() {
+		setVisible(false);
+	}
+	
 	public static void main(String[] args) {
-		ClueGUIMain frame = new ClueGUIMain();
-		frame.setVisible(true);
-		
+		theFrame.setVisible(true);		
 	}
 	
 }

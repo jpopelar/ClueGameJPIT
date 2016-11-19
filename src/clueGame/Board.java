@@ -18,6 +18,8 @@ import java.util.Set;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
+import gui.HumSuggDialog;
+
 public class Board extends JPanel {
 	// variable to store the initialized board
 	private static Board theInstance = new Board();
@@ -484,10 +486,13 @@ public class Board extends JPanel {
 			switch (c.getType()) {
 			case WEAPON:
 				weapons.add(c);
+				break;
 			case ROOM:
 				rooms.add(c);
+				break;
 			case PERSON:
 				people.add(c);
+				break;
 			default:
 			}
 		}
@@ -501,6 +506,7 @@ public class Board extends JPanel {
 		Card theWeapon = weapons.get(rand.nextInt(weapons.size()));
 		
 		theAnswer = new Solution(thePerson.getName(), theWeapon.getName(), theRoom.getName());
+		System.out.println(theAnswer);
 		
 		library.remove(thePerson);
 		library.remove(theRoom);
@@ -529,6 +535,7 @@ public class Board extends JPanel {
 		int turnCounter = getTurnCount(); //Useful when we go to our for loop
 
 		Player accuser = players.get(whoseTurn()); //Figure out who active player is (accuser)
+		
 		
 		for (Player p: players) if (p.getName().equals(accusation.person)) p.setLocation(accuser.getRow(),accuser.getCol());
 
@@ -661,14 +668,17 @@ public class Board extends JPanel {
 
 					HumanPlayer.playerMustFinish = false;
 					players.get(0).setLocation(clickedRow, clickedCol);
-					advanceTurn();
 					getTargets().clear();
 					repaint();
 					
 					if (targetSpace.isRoom()) {
-						/*HumSuggDialog humSugg = new HumSuggDialog();
+						HumSuggDialog humSugg = new HumSuggDialog();
 						humSugg.setVisible(true);
-						*/
+					
+					}
+					else {
+						repaint();
+						advanceTurn();
 					}
 				}
 				
